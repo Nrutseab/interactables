@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nrutseab JellyButtonPage</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:900,400&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      overflow: hidden;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    .logo-3d {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 2.9rem;
+      font-weight: 900;
+      color: #1071fe;
+      letter-spacing: 0.04em;
+      transform: skewY(-11deg) skewX(-10deg) perspective(300px) rotateY(-12deg) rotateX(6deg);
+      text-shadow:
+        0 2px 12px #1071fe66,
+        0 2px 0 #1b6ef3,
+        3px 8px 18px #1071fe11;
+      z-index: 10;
+      user-select: none;
+      pointer-events: auto;
+    }
+    .logo-3d a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      display: block;
+    }
+    .labs-3d {
+      position: absolute;
+      bottom: 38px;
+      right: 40px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #009cff;
+      letter-spacing: 0.05em;
+      transform: skewY(-10deg) skewX(12deg) perspective(300px) rotateY(14deg) rotateX(-8deg);
+      text-shadow:
+        0 2px 12px #009cff44,
+        0 2px 0 #0e3d7c;
+      z-index: 10;
+      user-select: none;
+      pointer-events: auto;
+    }
+    .labs-3d a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      display: block;
+    }
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 0.98rem;
+      color: #193659;
+      opacity: 0.8;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 0.02em;
+      z-index: 10;
+      user-select: none;
+      pointer-events: auto;
+    }
+    .footer a {
+      color: #1071fe;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .jellyball {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #1071fe;
+      box-shadow: 0 8px 32px 0 rgba(16,113,254,0.12), 0 2px 6px 0 rgba(16,113,254,0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 22px;
+      text-decoration: none;
+      transition: filter 0.2s;
+      z-index: 3;
+      user-select: none;
+      cursor: pointer;
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+      will-change: left, top;
+    }
+    .jellyball span {
+      pointer-events: none;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-3d">
+    <a href="https://www.nrutseab.com/home" tabindex="0" aria-label="Nrutseab Home">nrutseab</a>
+  </div>
+  <div class="labs-3d">
+    <a href="https://www.nrutseab.com/home" tabindex="0" aria-label="Nrutseab Home">labs</a>
+  </div>
+  <div class="footer">
+    &copy; <span id="year"></span> all rights reserved 
+    <a href="https://www.nrutseab.com/home">Nrutseab</a>
+    &nbsp; | &nbsp; 
+    <a href="mailto:hello@nrutseab.com">hello@nrutseab.com</a>
+  </div>
+
+  <!-- Interactive Jellyballs -->
+  <a href="/who" class="jellyball" id="ball-who"><span>Who</span></a>
+  <a href="/nrutholders" class="jellyball" id="ball-holders"><span>NrutHolders</span></a>
+  <a href="/creatives" class="jellyball" id="ball-creatives"><span>Creatives</span></a>
+  <a href="/contact" class="jellyball" id="ball-contact"><span>Contact</span></a>
+  <canvas id="tracks"></canvas>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Jellyball physics: bounce off borders and drop to bottom (direction device tilts)
+    class JellyBall {
+      constructor(el, color, idx) {
+        this.el = el;
+        this.color = color;
+        this.idx = idx;
+        this.radius = 60;
+        this.x = window.innerWidth / 2;
+        this.y = window.innerHeight / 2;
+        // initial velocity radiates out
+        this.vx = Math.cos((Math.PI * 2 * idx) / 4) * 3.2;
+        this.vy = Math.sin((Math.PI * 2 * idx) / 4) * 2.7;
+        this.bounce = 0.74 + Math.random() * 0.06;
+        this.gravity = 0.18;
+        this.friction = 0.985;
+        this.repelStrength = 0.9;
+      }
+      update(mouse, tiltX, tiltY) {
+        // Mouse repulsion (if mouse near ball)
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        if (dist < 120) {
+          let angle = Math.atan2(dy, dx);
+          let repel = (120 - dist) * this.repelStrength * 0.09;
+          this.vx -= Math.cos(angle) * repel;
+          this.vy -= Math.sin(angle) * repel;
+          this.el.style.filter = "brightness(1.15) drop-shadow(0 0 20px #1071fe88)";
+        } else {
+          this.el.style.filter = "";
+        }
+
+        // Device tilt: apply gentle force
+        this.vx += tiltX * 0.2; // left-right
+        this.vy += tiltY * 0.25; // up-down
+
+        // Gravity always pulls down
+        this.vy += this.gravity;
+
+        // Friction
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+
+        // Bounce off window borders
+        let minX = this.radius, minY = this.radius;
+        let maxX = window.innerWidth - this.radius, maxY = window.innerHeight - this.radius;
+        // bounce X
+        if (this.x < minX) {
+          this.x = minX;
+          if (this.vx < 0) this.vx *= -this.bounce;
+        }
+        if (this.x > maxX) {
+          this.x = maxX;
+          if (this.vx > 0) this.vx *= -this.bounce;
+        }
+        // bounce Y
+        if (this.y < minY) {
+          this.y = minY;
+          if (this.vy < 0) this.vy *= -this.bounce;
+        }
+        if (this.y > maxY) {
+          this.y = maxY;
+          if (this.vy > 0) this.vy *= -this.bounce * 0.85;
+        }
+
+        // Gradually drop to the bottom, with tilt
+        if (this.y > maxY - 1) {
+          // Once at bottom, friction is higher
+          this.vx *= 0.96;
+          this.vy *= 0.93;
+          // Very slow slide left/right if tilted
+          this.vx += tiltX * 0.04;
+        }
+
+        // Move
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Draw
+        this.el.style.left = (this.x - this.radius) + "px";
+        this.el.style.top = (this.y - this.radius) + "px";
+      }
+    }
+
+    // Setup jellyballs
+    const colors = ["#1071fe", "#1b6ef3", "#009cff", "#0e3d7c"];
+    const ballsEls = [
+      document.getElementById('ball-who'),
+      document.getElementById('ball-holders'),
+      document.getElementById('ball-creatives'),
+      document.getElementById('ball-contact'),
+    ];
+    const jellyBalls = ballsEls.map((el, i) => new JellyBall(el, colors[i], i));
+
+    // Mouse position
+    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+    window.addEventListener('mousemove', function(e) {
+      mouse = { x: e.clientX, y: e.clientY };
+      addTrack(mouse);
+    });
+    window.addEventListener('resize', function() {
+      resizeCanvas();
+      // Recenter balls on resize
+      jellyBalls.forEach((ball, i) => {
+        ball.x = window.innerWidth / 2 + Math.cos((Math.PI * 2 * i) / 4) * 160;
+        ball.y = window.innerHeight / 2 + Math.sin((Math.PI * 2 * i) / 4) * 180;
+      });
+    });
+
+    // Device tilt for gravity direction
+    let tiltX = 0, tiltY = 0;
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', function(e) {
+        // e.gamma: left-right [-90,90], e.beta: up-down [-180,180]
+        tiltX = e.gamma ? e.gamma / 30 : 0;
+        tiltY = e.beta ? (e.beta - 90) / 60 : 0; // beta 90 is upright
+      });
+    }
+
+    // Animate balls
+    function animateBalls() {
+      jellyBalls.forEach(ball => ball.update(mouse, tiltX, tiltY));
+      requestAnimationFrame(animateBalls);
+    }
+    animateBalls();
+
+    // Canvas trails
+    const canvas = document.getElementById('tracks');
+    let tracks = [];
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+
+    function addTrack(pos) {
+      tracks.push({ ...pos });
+      if (tracks.length > 34) tracks.shift();
+      drawTracks();
+    }
+    function drawTracks() {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 1; i < tracks.length; i++) {
+        ctx.strokeStyle = "#1071fe";
+        ctx.globalAlpha = 0.13 + 0.12 * (i / tracks.length);
+        ctx.lineWidth = 16 - 0.3 * (tracks.length - i);
+        ctx.beginPath();
+        ctx.moveTo(tracks[i - 1].x, tracks[i - 1].y);
+        ctx.lineTo(tracks[i].x, tracks[i].y);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+    setInterval(() => {
+      if (tracks.length > 3) tracks.shift();
+      drawTracks();
+    }, 34);
+  </script>
+</body>
+</html>
