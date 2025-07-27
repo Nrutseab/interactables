@@ -19,100 +19,171 @@
       height: 100vh;
       position: relative;
     }
+    /* 3D slanted */
     .logo-3d {
       position: absolute;
-      top: 32px;
-      left: 32px;
-      font-family: 'Roboto', sans-serif;
-      font-size: 2.9rem;
-      font-weight: 900;
-      color: #1071fe;
-      letter-spacing: 0.04em;
-      transform: skewY(-11deg) skewX(-10deg) perspective(300px) rotateY(-12deg) rotateX(6deg);
-      text-shadow:
-        0 2px 12px #1071fe66,
-        0 2px 0 #1b6ef3,
-        3px 8px 18px #1071fe11;
+      top: 0;
+      left: 0;
+      width: 40vw;
+      height: 40vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
       z-index: 10;
-      user-select: none;
       pointer-events: auto;
     }
     .logo-3d a {
-      color: inherit;
+      color: #1071fe;
       text-decoration: none;
       cursor: pointer;
-      display: block;
+      font-family: 'Roboto', sans-serif;
+      font-size: 7vw;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-shadow:
+        0 8px 44px #1071fe55,
+        0 2px 0 #1b6ef3,
+        6px 18px 38px #1071fe11;
+      transform: skewY(-9deg) skewX(-7deg) perspective(300px) rotateY(-12deg) rotateX(10deg);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
     }
     .labs-3d {
       position: absolute;
-      bottom: 38px;
-      right: 40px;
-      font-family: 'Roboto', sans-serif;
-      font-size: 2.1rem;
-      font-weight: 900;
-      color: #009cff;
-      letter-spacing: 0.05em;
-      transform: skewY(-10deg) skewX(12deg) perspective(300px) rotateY(14deg) rotateX(-8deg);
-      text-shadow:
-        0 2px 12px #009cff44,
-        0 2px 0 #0e3d7c;
+      bottom: 0;
+      right: 0;
+      width: 40vw;
+      height: 40vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
       z-index: 10;
-      user-select: none;
       pointer-events: auto;
     }
     .labs-3d a {
-      color: inherit;
+      color: #1071fe;
       text-decoration: none;
       cursor: pointer;
-      display: block;
+      font-family: 'Roboto', sans-serif;
+      font-size: 7vw;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-shadow:
+        0 8px 44px #1071fe55,
+        0 2px 0 #1b6ef3,
+        6px 18px 38px #1071fe11;
+      transform: skewY(-7deg) skewX(12deg) perspective(300px) rotateY(14deg) rotateX(-8deg);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
     }
     .footer {
       position: absolute;
-      bottom: 20px;
+      bottom: 70px;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
-      font-size: 0.98rem;
-      color: #193659;
-      opacity: 0.8;
+      font-size: 1.7vw;
+      color: #1071fe;
+      opacity: 1;
       font-family: 'Roboto', sans-serif;
       letter-spacing: 0.02em;
       z-index: 10;
+      font-weight: 500;
       user-select: none;
       pointer-events: auto;
     }
-    .footer a {
+    .contactinfo {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 1.5vw;
+      color: #1071fe;
+      opacity: 1;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 0.02em;
+      z-index: 10;
+      font-weight: 500;
+      user-select: none;
+      pointer-events: auto;
+    }
+    .footer a, .contactinfo a {
       color: #1071fe;
       text-decoration: none;
       font-weight: 500;
       cursor: pointer;
     }
+    /* JELLYBALLS */
     .jellyball {
       position: absolute;
-      width: 120px;
-      height: 120px;
+      width: 30vw;
+      height: 30vw;
+      min-width: 200px;
+      min-height: 200px;
+      max-width: 500px;
+      max-height: 500px;
       border-radius: 50%;
-      background: #1071fe;
-      box-shadow: 0 8px 32px 0 rgba(16,113,254,0.12), 0 2px 6px 0 rgba(16,113,254,0.14);
+      background: radial-gradient(circle at 30% 40%, #b5e2ff 60%, #e5f7ff 100%, transparent 120%);
+      /* 3D jelly effect: glassy, clear, soft */
+      box-shadow:
+        0 0 80px 30px #1071fe22 inset,
+        0 12px 120px 0 #1071fe33,
+        0 0 40px 8px #1071fe22;
+      backdrop-filter: blur(10px) brightness(1.2);
+      -webkit-backdrop-filter: blur(10px) brightness(1.2);
+      border: 2px solid #82cfff55;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: #1071fe;
       font-weight: 700;
-      font-size: 22px;
+      font-size: 3vw;
       text-decoration: none;
-      transition: filter 0.2s;
+      transition: filter 0.2s, box-shadow 0.3s, background 0.4s;
       z-index: 3;
       user-select: none;
-      cursor: pointer;
+      cursor: grab;
       font-family: 'Roboto', sans-serif;
       box-sizing: border-box;
       will-change: left, top;
+      opacity: 0.92;
+      /* Soft jelly texture overlay using SVG filter */
+      overflow: hidden;
+    }
+    .jellyball:active {
+      cursor: grabbing;
+      filter: brightness(1.18) drop-shadow(0 0 40px #82cfff55);
+      box-shadow:
+        0 0 140px 50px #1071fe44 inset,
+        0 18px 170px 0 #1071fe66,
+        0 0 60px 16px #1071fe33;
     }
     .jellyball span {
       pointer-events: none;
-      font-weight: 600;
+      font-weight: 900;
       letter-spacing: 0.02em;
+      font-family: 'Roboto', sans-serif;
+      font-size: 3vw;
+      opacity: 0.9;
+      text-shadow:
+        0 2px 12px #1071fe22,
+        0 2px 0 #b5e2ff;
+    }
+    .jellyball .texture {
+      position: absolute;
+      left:0; top:0; right:0; bottom:0;
+      pointer-events: none;
+      z-index: 1;
+      width:100%; height:100%;
+      opacity:0.2;
+      mix-blend-mode: screen;
     }
     canvas {
       position: fixed;
@@ -135,67 +206,108 @@
   <div class="footer">
     &copy; <span id="year"></span> all rights reserved 
     <a href="https://www.nrutseab.com/home">Nrutseab</a>
-    &nbsp; | &nbsp; 
+  </div>
+  <div class="contactinfo">
     <a href="mailto:hello@nrutseab.com">hello@nrutseab.com</a>
   </div>
 
   <!-- Interactive Jellyballs -->
-  <a href="/who" class="jellyball" id="ball-who"><span>Who</span></a>
-  <a href="/nrutholders" class="jellyball" id="ball-holders"><span>NrutHolders</span></a>
-  <a href="/creatives" class="jellyball" id="ball-creatives"><span>Creatives</span></a>
-  <a href="/contact" class="jellyball" id="ball-contact"><span>Contact</span></a>
+  <a href="/who" class="jellyball" id="ball-who"><span>Who</span>
+    <svg class="texture" viewBox="0 0 100 100">
+      <defs>
+        <filter id="jelly">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="2"/>
+          <feDisplacementMap in2="SourceGraphic" in="SourceGraphic" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <ellipse cx="50" cy="50" rx="46" ry="43" filter="url(#jelly)" fill="#fff"/>
+    </svg>
+  </a>
+  <a href="/nrutholders" class="jellyball" id="ball-holders"><span>NrutHolders</span>
+    <svg class="texture" viewBox="0 0 100 100">
+      <defs>
+        <filter id="jelly">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="4"/>
+          <feDisplacementMap in2="SourceGraphic" in="SourceGraphic" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <ellipse cx="50" cy="50" rx="46" ry="43" filter="url(#jelly)" fill="#fff"/>
+    </svg>
+  </a>
+  <a href="/creatives" class="jellyball" id="ball-creatives"><span>Creatives</span>
+    <svg class="texture" viewBox="0 0 100 100">
+      <defs>
+        <filter id="jelly">
+          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="7"/>
+          <feDisplacementMap in2="SourceGraphic" in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <ellipse cx="50" cy="50" rx="46" ry="43" filter="url(#jelly)" fill="#fff"/>
+    </svg>
+  </a>
+  <a href="/contact" class="jellyball" id="ball-contact"><span>Contact</span>
+    <svg class="texture" viewBox="0 0 100 100">
+      <defs>
+        <filter id="jelly">
+          <feTurbulence type="fractalNoise" baseFrequency="0.017" numOctaves="3" seed="11"/>
+          <feDisplacementMap in2="SourceGraphic" in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <ellipse cx="50" cy="50" rx="46" ry="43" filter="url(#jelly)" fill="#fff"/>
+    </svg>
+  </a>
   <canvas id="tracks"></canvas>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Jellyball physics: bounce off borders and drop to bottom (direction device tilts)
+    // Jellyball physics with drag & drop, bounce, big bounces, stop quivering after landing
     class JellyBall {
-      constructor(el, color, idx) {
+      constructor(el, color, idx, total) {
         this.el = el;
         this.color = color;
         this.idx = idx;
-        this.radius = 60;
-        this.x = window.innerWidth / 2;
-        this.y = window.innerHeight / 2;
-        // initial velocity radiates out
-        this.vx = Math.cos((Math.PI * 2 * idx) / 4) * 3.2;
-        this.vy = Math.sin((Math.PI * 2 * idx) / 4) * 2.7;
-        this.bounce = 0.74 + Math.random() * 0.06;
-        this.gravity = 0.18;
+        this.radius = Math.max(el.offsetWidth, el.offsetHeight) / 2;
+        this.screenW = window.innerWidth;
+        this.screenH = window.innerHeight;
+        // Initial position: spread around the screen, avoid overlap
+        const angle = (Math.PI * 2 * idx) / total;
+        this.x = this.screenW / 2 + Math.cos(angle) * (this.screenW * 0.25);
+        this.y = this.screenH / 2 + Math.sin(angle) * (this.screenH * 0.18);
+        // No movement until drag
+        this.vx = 0;
+        this.vy = 0;
+        this.bounce = 0.92; // big bounce
+        this.gravity = 0.22;
         this.friction = 0.985;
-        this.repelStrength = 0.9;
+        this.landed = false;
+        this.dragging = false;
+        this.offsetX = 0;
+        this.offsetY = 0;
+        this.lastY = this.y;
+        this.lastVX = 0;
+        this.lastVY = 0;
+        this.screenUpdate();
+        this.initDrag();
       }
-      update(mouse, tiltX, tiltY) {
-        // Mouse repulsion (if mouse near ball)
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-        if (dist < 120) {
-          let angle = Math.atan2(dy, dx);
-          let repel = (120 - dist) * this.repelStrength * 0.09;
-          this.vx -= Math.cos(angle) * repel;
-          this.vy -= Math.sin(angle) * repel;
-          this.el.style.filter = "brightness(1.15) drop-shadow(0 0 20px #1071fe88)";
-        } else {
-          this.el.style.filter = "";
+      screenUpdate() {
+        this.screenW = window.innerWidth;
+        this.screenH = window.innerHeight;
+        this.radius = Math.max(this.el.offsetWidth, this.el.offsetHeight) / 2;
+      }
+      update() {
+        if (this.dragging) return;
+        // Gravity only if not landed
+        if (!this.landed) {
+          this.vy += this.gravity; // always pulls down
         }
-
-        // Device tilt: apply gentle force
-        this.vx += tiltX * 0.2; // left-right
-        this.vy += tiltY * 0.25; // up-down
-
-        // Gravity always pulls down
-        this.vy += this.gravity;
-
         // Friction
         this.vx *= this.friction;
         this.vy *= this.friction;
 
         // Bounce off window borders
         let minX = this.radius, minY = this.radius;
-        let maxX = window.innerWidth - this.radius, maxY = window.innerHeight - this.radius;
-        // bounce X
+        let maxX = this.screenW - this.radius, maxY = this.screenH - this.radius;
         if (this.x < minX) {
           this.x = minX;
           if (this.vx < 0) this.vx *= -this.bounce;
@@ -204,23 +316,19 @@
           this.x = maxX;
           if (this.vx > 0) this.vx *= -this.bounce;
         }
-        // bounce Y
         if (this.y < minY) {
           this.y = minY;
           if (this.vy < 0) this.vy *= -this.bounce;
         }
         if (this.y > maxY) {
           this.y = maxY;
-          if (this.vy > 0) this.vy *= -this.bounce * 0.85;
-        }
-
-        // Gradually drop to the bottom, with tilt
-        if (this.y > maxY - 1) {
-          // Once at bottom, friction is higher
-          this.vx *= 0.96;
-          this.vy *= 0.93;
-          // Very slow slide left/right if tilted
-          this.vx += tiltX * 0.04;
+          if (this.vy > 0) this.vy *= -this.bounce * 1.15; // bigger bounce
+          // If very close to bottom and not much movement, stop movement (stop quivering)
+          if (Math.abs(this.vy) < 0.12 && Math.abs(this.vx) < 0.12) {
+            this.landed = true;
+            this.vx = 0;
+            this.vy = 0;
+          }
         }
 
         // Move
@@ -231,60 +339,102 @@
         this.el.style.left = (this.x - this.radius) + "px";
         this.el.style.top = (this.y - this.radius) + "px";
       }
+      initDrag() {
+        // Touch and mouse support
+        let startDrag = (clientX, clientY) => {
+          this.dragging = true;
+          this.landed = false;
+          this.offsetX = clientX - this.x;
+          this.offsetY = clientY - this.y;
+          this.el.style.filter = "brightness(1.15) drop-shadow(0 0 40px #82cfff55)";
+          this.el.style.boxShadow = "0 0 140px 50px #1071fe44 inset, 0 18px 170px 0 #1071fe66, 0 0 60px 16px #1071fe33";
+        };
+        let drag = (clientX, clientY) => {
+          this.x = clientX - this.offsetX;
+          this.y = clientY - this.offsetY;
+          this.el.style.left = (this.x - this.radius) + "px";
+          this.el.style.top = (this.y - this.radius) + "px";
+        };
+        let endDrag = () => {
+          this.el.style.filter = "";
+          this.el.style.boxShadow = "";
+          this.dragging = false;
+          // Give a velocity based on last movement (for bounce launch)
+          this.vx = (this.x - this.lastX) / 2;
+          this.vy = (this.y - this.lastY) / 2;
+        };
+        // Mouse
+        this.el.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          startDrag(e.clientX, e.clientY);
+          this.lastX = this.x;
+          this.lastY = this.y;
+          window.addEventListener('mousemove', mousemove);
+          window.addEventListener('mouseup', mouseup);
+        });
+        const mousemove = (e) => {
+          drag(e.clientX, e.clientY);
+        };
+        const mouseup = (e) => {
+          endDrag();
+          window.removeEventListener('mousemove', mousemove);
+          window.removeEventListener('mouseup', mouseup);
+        };
+        // Touch
+        this.el.addEventListener('touchstart', (e) => {
+          if (e.touches.length > 0) {
+            const t = e.touches[0];
+            startDrag(t.clientX, t.clientY);
+            this.lastX = this.x;
+            this.lastY = this.y;
+            window.addEventListener('touchmove', touchmove, {passive:false});
+            window.addEventListener('touchend', touchend);
+          }
+        }, {passive:false});
+        const touchmove = (e) => {
+          if (e.touches.length > 0) {
+            const t = e.touches[0];
+            drag(t.clientX, t.clientY);
+          }
+        };
+        const touchend = (e) => {
+          endDrag();
+          window.removeEventListener('touchmove', touchmove);
+          window.removeEventListener('touchend', touchend);
+        };
+      }
     }
 
     // Setup jellyballs
-    const colors = ["#1071fe", "#1b6ef3", "#009cff", "#0e3d7c"];
     const ballsEls = [
       document.getElementById('ball-who'),
       document.getElementById('ball-holders'),
       document.getElementById('ball-creatives'),
       document.getElementById('ball-contact'),
     ];
-    const jellyBalls = ballsEls.map((el, i) => new JellyBall(el, colors[i], i));
-
-    // Mouse position
-    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-
-    window.addEventListener('mousemove', function(e) {
-      mouse = { x: e.clientX, y: e.clientY };
-      addTrack(mouse);
-    });
-    window.addEventListener('resize', function() {
-      resizeCanvas();
-      // Recenter balls on resize
-      jellyBalls.forEach((ball, i) => {
-        ball.x = window.innerWidth / 2 + Math.cos((Math.PI * 2 * i) / 4) * 160;
-        ball.y = window.innerHeight / 2 + Math.sin((Math.PI * 2 * i) / 4) * 180;
-      });
-    });
-
-    // Device tilt for gravity direction
-    let tiltX = 0, tiltY = 0;
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener('deviceorientation', function(e) {
-        // e.gamma: left-right [-90,90], e.beta: up-down [-180,180]
-        tiltX = e.gamma ? e.gamma / 30 : 0;
-        tiltY = e.beta ? (e.beta - 90) / 60 : 0; // beta 90 is upright
-      });
-    }
+    const jellyBalls = ballsEls.map((el, i) => new JellyBall(el, "#1071fe", i, ballsEls.length));
 
     // Animate balls
     function animateBalls() {
-      jellyBalls.forEach(ball => ball.update(mouse, tiltX, tiltY));
+      jellyBalls.forEach(ball => ball.update());
       requestAnimationFrame(animateBalls);
     }
     animateBalls();
 
-    // Canvas trails
+    // Canvas trails (not linked to jelly, just mouse trails for visual)
     const canvas = document.getElementById('tracks');
     let tracks = [];
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      jellyBalls.forEach(ball => ball.screenUpdate());
     }
     resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
+    window.addEventListener('mousemove', function(e) {
+      addTrack({ x: e.clientX, y: e.clientY });
+    });
     function addTrack(pos) {
       tracks.push({ ...pos });
       if (tracks.length > 34) tracks.shift();
